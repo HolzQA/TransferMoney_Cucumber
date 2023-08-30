@@ -1,0 +1,36 @@
+plugins {
+    id 'java'	// плагин, понимающий, как работать с Java
+}
+sourceCompatibility ="11"	//работаем с Java 11
+
+compileJava.options.encoding="UTF-8"	   	//поддержка UTF-8
+compileTestJava.options.encoding="UTF-8"	//поддержка UTF-8
+
+
+group 'ru.netology'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()	// репозитории, откуда скачиваются все зависимости
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.8.2'
+    testImplementation 'com.codeborne:selenide:6.17.2'
+    testImplementation 'org.slf4j:slf4j-simple:1.7.32'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.28'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    testImplementation 'io.cucumber:cucumber-java:7.1.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.1.0'
+
+    implementation 'org.apache.commons:commons-lang3:3.13.0'
+}
+
+test {
+    useJUnitPlatform()
+    // в тестах, вызывая `gradlew test -Dselenide.headless=true` будем передавать этот параметр в JVM (где его подтянет Selenide)
+    systemProperty 'selenide.headless', System.getProperty('selenide.headless')
+}
